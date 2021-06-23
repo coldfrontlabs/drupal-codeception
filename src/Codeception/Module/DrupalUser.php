@@ -3,12 +3,9 @@
 namespace Codeception\Module;
 
 use Codeception\Module;
-use Codeception\TestInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\user\Entity\User;
 use Faker\Factory;
-use Codeception\Util\Drush;
-use Exception;
 
 /**
  * Class DrupalUser.
@@ -17,17 +14,15 @@ use Exception;
  * #### Example (DrupalUser)
  *     modules:
  *        - DrupalUser:
- *            default_role: 'authenticated'
- *            driver: 'PhpBrowser'
- *            drush: './vendor/bin/drush'
- *            cleanup_entities:
- *              - media
- *              - file
- *              - paragraph
- *            cleanup_test: false
- *            cleanup_failed: false
- *            cleanup_suite: true
- *            alias: @site.com
+ *          default_role: 'authenticated'
+ *          cleanup_entities:
+ *            - media
+ *            - file
+ *            - paragraph
+ *          cleanup_test: false
+ *          cleanup_failed: false
+ *          cleanup_suite: true
+ *          alias: @site.com
  *
  * @package Codeception\Module
  */
@@ -52,11 +47,8 @@ class DrupalUser extends Module {
    *
    * @var array
    */
-  protected array $config = [
-    'alias' => '',
+  protected $config = [
     'default_role' => 'authenticated',
-    'driver' => 'WebDriver',
-    'drush' => 'drush',
     'cleanup_entities' => [],
     'cleanup_test' => TRUE,
     'cleanup_failed' => TRUE,
@@ -66,19 +58,7 @@ class DrupalUser extends Module {
   /**
    * {@inheritdoc}
    */
-  public function _beforeSuite(array $settings = []) { // @codingStandardsIgnoreLine
-    $this->driver = null;
-    if (!$this->hasModule($this->_getConfig('driver'))) {
-      $this->fail('User driver module not found.');
-    }
-
-    $this->driver = $this->getModule($this->_getConfig('driver'));
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function _after(TestInterface $test) { // @codingStandardsIgnoreLine
+  public function _after(\Codeception\TestCase $test) { // @codingStandardsIgnoreLine
     if ($this->_getConfig('cleanup_test')) {
       $this->userCleanup();
     }
@@ -143,11 +123,21 @@ class DrupalUser extends Module {
    *   User id.
    */
   public function logInAs($username) {
-    $alias = $this->_getConfig('alias') ? $this->_getConfig('alias') . ' ' : '';
-    $output = Drush::runDrush($alias. 'uli --name=' . $username, $this->_getConfig('drush'), $this->_getConfig('working_directory'), $this->_getConfig('timeout'));
-    $gen_url = str_replace(PHP_EOL, '', $output);
-    $url = substr($gen_url, strpos($gen_url, '/user/reset'));
-    $this->driver->amOnPage($url);
+    /** @var \Drupal\user\Entity\User $user */
+    try {
+      // Load the user.
+      $account = user_load_by_name($username);
+
+      if (FALSE === $account ) {
+        throw new \Exception();
+      }
+
+      // Login with the user.
+      user_login_finalize($account);
+    }
+    catch (\Exception $e) {
+      $this->fail('Coud not login with username ' . $username);
+    }
   }
 
   /**
