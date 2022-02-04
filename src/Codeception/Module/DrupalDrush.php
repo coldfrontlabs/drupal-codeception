@@ -12,13 +12,13 @@ use Codeception\Util\Drush;
  * #### Example (DrupalDrush)
  *     modules:
  *        - DrupalDrush:
- *            working_directory: './web'
- *            timeout: 120
- *            drush: './vendor/bin/drush'
- *            alias: '@mysite.com'
- *            options:
- *              uri: http://mydomain.com
- *              root: /app/web
+ *          working_directory: './web'
+ *          timeout: 120
+ *          drush: './vendor/bin/drush'
+ *          alias: '@mysite.com'
+ *          options:
+ *            uri: http://mydomain.com
+ *            root: /app/web
  *
  * @package Codeception\Module
  */
