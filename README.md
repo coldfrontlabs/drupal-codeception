@@ -9,11 +9,17 @@ Includes:
 - Drupal Drush
 - Drupal Acceptance
 
+## Differences from guncha25/drupal-codeception
+
+- PHP 8 support
+- No dependency on Faker
+- Various fixes
+
 ## Installation
 
 Require package:
 
-```composer require guncha25/drupal-codeception --dev```
+```composer require coldfrontlabs/drupal-codeception --dev```
 
 If codeception was not previously set up:
 
