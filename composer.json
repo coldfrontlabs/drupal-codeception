@@ -1,5 +1,5 @@
 {
-    "name": "guncha25/drupal-codeception",
+    "name": "coldfrontlabs/drupal-codeception",
     "description": "Codeception toolset for Drupal testing.",
     "type": "package",
     "repositories": [
@@ -19,6 +19,10 @@
     },
     "license": "GPL-2.0",
     "authors": [
+        {
+            "name": "Mathew Winstone",
+            "email": "mwinstone@coldfrontlabs.ca"
+        },
         {
             "name": "Guntis Jakovins",
             "email": "guntis.jakovins@gmail.com"
