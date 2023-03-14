@@ -17,7 +17,7 @@
         "composer/installers": "*",
         "drupal/core": "^8 || ^9 || ^10"
     },
-    "license": "GPL-2.0",
+    "license": "GPL-3.0",
     "authors": [
         {
             "name": "Mathew Winstone",
