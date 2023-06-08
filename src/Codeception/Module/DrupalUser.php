@@ -66,6 +66,7 @@ class DrupalUser extends Module {
     'cleanup_test' => TRUE,
     'cleanup_failed' => TRUE,
     'cleanup_suite' => TRUE,
+    'site' => 'default',
   ];
 
   /**
@@ -164,7 +165,7 @@ class DrupalUser extends Module {
       }
       else {
         $alias = $this->_getConfig('alias') ? $this->_getConfig('alias') . ' ' : '';
-        $output = Drush::runDrush($alias. 'uli --name=' . $username, $this->_getConfig('drush'), $this->_getConfig('working_directory'));
+        $output = Drush::runDrush($alias. '--uri=' . $this->_getConfig('site') . ' uli --name=' . $username, $this->_getConfig('drush'), $this->_getConfig('working_directory'));
         $gen_url = str_replace(PHP_EOL, '', $output);
         $url = substr($gen_url, strpos($gen_url, '/user/reset'));
         $this->driver->amOnPage($url);
@@ -186,6 +187,7 @@ class DrupalUser extends Module {
    */
   public function logInWithRole($role) {
     $user = $this->createUserWithRoles([$role], Factory::create()->password(12, 14));
+    var_dump($user->getAccountName());
 
     $this->logInAs($user->getAccountName());
 
