@@ -5,7 +5,7 @@ namespace Codeception\Module;
 use Codeception\Module;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Url;
-use Codeception\TestCase;
+use Codeception\TestInterface as TestCase;
 
 /**
  * Class DrupalEntity.
@@ -30,7 +30,7 @@ class DrupalEntity extends Module {
    *
    * @var array
    */
-  protected $config = [
+  protected array $config = [
     'cleanup_test' => TRUE,
     'cleanup_failed' => TRUE,
     'cleanup_suite' => TRUE,
