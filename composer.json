@@ -9,22 +9,19 @@
         }
     ],
     "require": {
-        "codeception/codeception": "^5.0",
-        "codeception/module-webdriver": "*",
-        "drupal/webprofiler": "^10",
-        "webflo/drupal-finder": "dev-runtime",
-        "fakerphp/faker": "^1.23"
+        "codeception/codeception": "^5",
+        "codeception/module-webdriver": "^3 || ^4",
+        "webflo/drupal-finder": "^1.2",
+        "fakerphp/faker": "^1.23",
+        "codeception/module-phpbrowser": "^3",
+        "codeception/module-asserts": "^3"
     },
     "require-dev": {
-        "composer/installers": "*",
-        "drupal/core": "~10"
+        "composer/installers": "^2",
+        "drupal/core": "^9 || ^10"
     },
-    "license": "GPL-3.0",
+    "license": "GPL-2.0",
     "authors": [
-        {
-            "name": "Mathew Winstone",
-            "email": "mwinstone@coldfrontlabs.ca"
-        },
         {
             "name": "Guntis Jakovins",
             "email": "guntis.jakovins@gmail.com"
