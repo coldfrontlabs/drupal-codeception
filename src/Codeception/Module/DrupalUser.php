@@ -26,6 +26,7 @@ use Faker\Factory;
  *          cleanup_failed: false
  *          cleanup_suite: true
  *          alias: @site.com
+ *          site: default (site name for multisiting support)
  *
  * @package Codeception\Module
  */
@@ -187,7 +188,6 @@ class DrupalUser extends Module {
    */
   public function logInWithRole($role) {
     $user = $this->createUserWithRoles([$role], Factory::create()->password(12, 14));
-    var_dump($user->getAccountName());
 
     $this->logInAs($user->getAccountName());
 
