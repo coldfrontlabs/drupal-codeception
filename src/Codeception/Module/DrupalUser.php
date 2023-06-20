@@ -7,6 +7,7 @@ use Drupal\Core\Config\StorageInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\user\Entity\User;
 use Codeception\Util\Drush;
+use Codeception\TestInterface as TestCase;
 use Faker\Factory;
 
 /**
@@ -25,6 +26,7 @@ use Faker\Factory;
  *          cleanup_failed: false
  *          cleanup_suite: true
  *          alias: @site.com
+ *          site: default (site name for multisiting support)
  *
  * @package Codeception\Module
  */
@@ -56,7 +58,7 @@ class DrupalUser extends Module {
    *
    * @var array
    */
-  protected $config = [
+  protected array $config = [
     'alias' => '',
     'driver' => NULL,
     'drush' => 'drush',
@@ -65,6 +67,7 @@ class DrupalUser extends Module {
     'cleanup_test' => TRUE,
     'cleanup_failed' => TRUE,
     'cleanup_suite' => TRUE,
+    'site' => 'default',
   ];
 
   /**
@@ -83,7 +86,7 @@ class DrupalUser extends Module {
   /**
    * {@inheritdoc}
    */
-  public function _after(\Codeception\TestCase $test) { // @codingStandardsIgnoreLine
+  public function _after(TestCase $test) { // @codingStandardsIgnoreLine
     if ($this->_getConfig('cleanup_test')) {
       $this->userCleanup();
     }
@@ -92,7 +95,7 @@ class DrupalUser extends Module {
   /**
    * {@inheritdoc}
    */
-  public function _failed(\Codeception\TestCase $test, $fail) { // @codingStandardsIgnoreLine
+  public function _failed(TestCase $test, $fail) { // @codingStandardsIgnoreLine
     if ($this->_getConfig('cleanup_failed')) {
       $this->userCleanup();
     }
@@ -123,8 +126,8 @@ class DrupalUser extends Module {
     /** @var \Drupal\user\Entity\User $user */
     try {
       $user = \Drupal::entityTypeManager()->getStorage('user')->create([
-        'name' => $faker->userName,
-        'mail' => $faker->email,
+        'name' => $faker->userName(),
+        'mail' => $faker->email(),
         'roles' => empty($roles) ? $this->_getConfig('default_role') : $roles,
         'pass' => $password ? $password : $faker->password(12, 14),
         'status' => 1,
@@ -163,7 +166,7 @@ class DrupalUser extends Module {
       }
       else {
         $alias = $this->_getConfig('alias') ? $this->_getConfig('alias') . ' ' : '';
-        $output = Drush::runDrush($alias. 'uli --name=' . $username, $this->_getConfig('drush'), $this->_getConfig('working_directory'));
+        $output = Drush::runDrush($alias. '--uri=' . $this->_getConfig('site') . ' uli --name=' . $username, $this->_getConfig('drush'), $this->_getConfig('working_directory'));
         $gen_url = str_replace(PHP_EOL, '', $output);
         $url = substr($gen_url, strpos($gen_url, '/user/reset'));
         $this->driver->amOnPage($url);
