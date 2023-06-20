@@ -5,6 +5,8 @@ namespace Codeception\Module;
 use Codeception\Module;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\user\Entity\User;
+use Codeception\Util\Drush;
+use Codeception\TestInterface as TestCase;
 use Faker\Factory;
 
 /**
@@ -23,6 +25,7 @@ use Faker\Factory;
  *          cleanup_failed: false
  *          cleanup_suite: true
  *          alias: @site.com
+ *          site: default (site name for multisiting support)
  *
  * @package Codeception\Module
  */
@@ -47,18 +50,35 @@ class DrupalUser extends Module {
    *
    * @var array
    */
-  protected $config = [
+  protected array $config = [
+    'alias' => '',
+    'driver' => NULL,
+    'drush' => 'drush',
     'default_role' => 'authenticated',
     'cleanup_entities' => [],
     'cleanup_test' => TRUE,
     'cleanup_failed' => TRUE,
     'cleanup_suite' => TRUE,
+    'site' => 'default',
   ];
 
   /**
    * {@inheritdoc}
    */
-  public function _after(\Codeception\TestCase $test) { // @codingStandardsIgnoreLine
+  public function _beforeSuite($settings = []) { // @codingStandardsIgnoreLine
+    $this->driver = null;
+    if (!$this->hasModule($this->_getConfig('driver'))) {
+      $this->useCli = TRUE;
+    }
+    else {
+      $this->driver = $this->getModule($this->_getConfig('driver'));
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function _after(TestCase $test) { // @codingStandardsIgnoreLine
     if ($this->_getConfig('cleanup_test')) {
       $this->userCleanup();
     }
@@ -67,7 +87,7 @@ class DrupalUser extends Module {
   /**
    * {@inheritdoc}
    */
-  public function _failed(TestInterface $test, Exception $fail) { // @codingStandardsIgnoreLine
+  public function _failed(TestCase $test, $fail) { // @codingStandardsIgnoreLine
     if ($this->_getConfig('cleanup_failed')) {
       $this->userCleanup();
     }
@@ -98,8 +118,8 @@ class DrupalUser extends Module {
     /** @var \Drupal\user\Entity\User $user */
     try {
       $user = \Drupal::entityTypeManager()->getStorage('user')->create([
-        'name' => $faker->userName,
-        'mail' => $faker->email,
+        'name' => $faker->userName(),
+        'mail' => $faker->email(),
         'roles' => empty($roles) ? $this->_getConfig('default_role') : $roles,
         'pass' => $password ? $password : $faker->password(12, 14),
         'status' => 1,
@@ -132,8 +152,16 @@ class DrupalUser extends Module {
         throw new \Exception();
       }
 
-      // Login with the user.
-      user_login_finalize($account);
+        // Login with the user.
+        user_login_finalize($account);
+      }
+      else {
+        $alias = $this->_getConfig('alias') ? $this->_getConfig('alias') . ' ' : '';
+        $output = Drush::runDrush($alias. '--uri=' . $this->_getConfig('site') . ' uli --name=' . $username, $this->_getConfig('drush'), $this->_getConfig('working_directory'));
+        $gen_url = str_replace(PHP_EOL, '', $output);
+        $url = substr($gen_url, strpos($gen_url, '/user/reset'));
+        $this->driver->amOnPage($url);
+      }
     }
     catch (\Exception $e) {
       $this->fail('Coud not login with username ' . $username);
