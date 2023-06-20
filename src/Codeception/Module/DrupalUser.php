@@ -6,7 +6,6 @@ use Codeception\Module;
 use Codeception\TestInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\user\Entity\User;
-use Codeception\Util\Drush;
 use Faker\Factory;
 use Codeception\Util\Drush;
 use Exception;
@@ -47,13 +46,6 @@ class DrupalUser extends Module {
    * @var array
    */
   protected $users;
-
-  /**
-   * Flag to note whether the CLI should be used for user actions.
-   *
-   * @var bool
-   */
-  protected $useCli = FALSE;
 
   /**
    * Default module configuration.
