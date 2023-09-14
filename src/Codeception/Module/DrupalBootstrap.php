@@ -5,10 +5,10 @@ namespace Codeception\Module;
 use Codeception\Configuration;
 use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
-use Codeception\TestDrupalKernel;
-use Symfony\Component\HttpFoundation\Request;
-use DrupalFinder\DrupalFinder;
 use Codeception\Module\DrupalBootstrap\EventsAssertionsTrait;
+use Codeception\TestDrupalKernel;
+use DrupalFinder\DrupalFinder;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class DrupalBootstrap.

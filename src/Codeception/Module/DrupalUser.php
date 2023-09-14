@@ -3,11 +3,10 @@
 namespace Codeception\Module;
 
 use Codeception\Module;
-use Drupal\Core\Config\StorageInterface;
+use Codeception\TestInterface as TestCase;
+use Codeception\Util\Drush;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\user\Entity\User;
-use Codeception\Util\Drush;
-use Codeception\TestInterface as TestCase;
 use Faker\Factory;
 
 /**
