@@ -35,7 +35,7 @@ class DrupalWatchdog extends Module {
    *
    * @var array
    */
-  protected array $config = [
+  protected $config = [
     'channels' => [],
     'level' => 'ERROR',
     'enabled' => TRUE,

@@ -58,7 +58,7 @@ class DrupalUser extends Module {
    *
    * @var array
    */
-  protected array $config = [
+  protected $config = [
     'alias' => '',
     'driver' => NULL,
     'drush' => 'drush',

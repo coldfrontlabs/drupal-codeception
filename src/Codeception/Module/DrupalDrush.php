@@ -28,7 +28,7 @@ class DrupalDrush extends Module {
    *
    * @var array
    */
-  protected array $config = [
+  protected $config = [
     'drush' => 'drush',
     'alias' => '',
     'options' => [],
