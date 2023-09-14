@@ -52,7 +52,7 @@ class DrupalUser extends Module {
    *
    * @var array
    */
-  protected array $config = [
+  protected $config = [
     'alias' => '',
     'default_role' => 'authenticated',
     'driver' => 'WebDriver',
