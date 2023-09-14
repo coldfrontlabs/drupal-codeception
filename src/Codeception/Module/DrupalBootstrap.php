@@ -7,7 +7,7 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\Module\DrupalBootstrap\EventsAssertionsTrait;
 use Codeception\TestDrupalKernel;
-use DrupalFinder\DrupalFinder
+use DrupalFinder\DrupalFinder;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

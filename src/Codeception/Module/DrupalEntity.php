@@ -30,7 +30,7 @@ class DrupalEntity extends Module {
    *
    * @var array
    */
-  protected $config = [
+  protected array $config = [
     'cleanup_test' => TRUE,
     'cleanup_failed' => TRUE,
     'cleanup_suite' => TRUE,
