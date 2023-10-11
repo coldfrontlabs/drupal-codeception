@@ -4,6 +4,7 @@ namespace Codeception\Module;
 
 use Codeception\Module;
 use Codeception\TestInterface;
+use Drupal\Core\Config\StorageInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\user\Entity\User;
 use Faker\Factory;
