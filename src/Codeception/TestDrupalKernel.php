@@ -8,7 +8,7 @@ use Drupal\Core\Routing\RouteObjectInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Route;
 
-class TestDrupalKernel extends DrupalKernel{
+class TestDrupalKernel extends DrupalKernel {
 
   /**
    * TestDrupalKernel constructor.
