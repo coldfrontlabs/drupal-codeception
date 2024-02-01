@@ -7,7 +7,6 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\Module\DrupalBootstrap\EventsAssertionsTrait;
 use Codeception\TestDrupalKernel;
-use DrupalFinder\DrupalFinder;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -58,16 +57,14 @@ class DrupalBootstrap extends Module {
     parent::__construct($container, $config);
     if (!isset($this->config['root'])) {
 
-      $drupalFinder = new DrupalFinder();
-
-      $drupalFinder->locateRoot(getcwd());
-      $drupalRoot = $drupalFinder->getDrupalRoot();
+      $drupalRoot = $this->getDrupalRoot();
 
       // Autodetect Drupal root.
       if ($drupalRoot) {
         $this->_setConfig(['root' => $drupalRoot]);
       }
       else {
+        // Otherwise try what you can.
         $this->_setConfig(['root' => Configuration::projectDir() . 'web']);
       }
     }
@@ -81,6 +78,22 @@ class DrupalBootstrap extends Module {
     $kernel->bootTestEnvironment($this->_getConfig('site_path'), $request);
   }
 
+  /**
+   * Try to find where Drupal's root directory is.
+   *
+   * @return string|bool
+   *   Return the string absolute path to the Drupal root directory, FALSE otherwise.
+   */
+  public function getDrupalRoot() {
+    // @todo implement various detection methods.
+    // Check for index.php
+    // Ask composer where the bin-dir is
+    // Ask composer where the web-root is
+    // Check the composer installers config for a hint.
+    // Otherwise fail.
+    return FALSE;
+  }
+  
   /**
    * Enabled dependent modules.
    */
