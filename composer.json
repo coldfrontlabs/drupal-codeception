@@ -12,6 +12,7 @@
         "codeception/codeception": "^5.0",
         "codeception/module-webdriver": "*",
         "drupal/webprofiler": "^10",
+        "webflo/drupal-finder": "^2.0",
         "fakerphp/faker": "^1.23"
     },
     "require-dev": {
