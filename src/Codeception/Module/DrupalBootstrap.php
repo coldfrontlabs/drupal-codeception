@@ -7,6 +7,7 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\Module\DrupalBootstrap\EventsAssertionsTrait;
 use Codeception\TestDrupalKernel;
+use DrupalFinder\DrupalFinder
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -84,14 +85,10 @@ class DrupalBootstrap extends Module {
    * @return string|bool
    *   Return the string absolute path to the Drupal root directory, FALSE otherwise.
    */
-  public function getDrupalRoot() {
-    // @todo implement various detection methods.
-    // Check for index.php
-    // Ask composer where the bin-dir is
-    // Ask composer where the web-root is
-    // Check the composer installers config for a hint.
-    // Otherwise fail.
-    return FALSE;
+  public function getDrupalRoot(): ?string {
+    $drupalFinder = new DrupalFinder();
+    $drupalRoot = $drupalFinder->getDrupalRoot();
+    return !is_null($drupalRoot) ? $drupalRoot : FALSE;
   }
   
   /**
