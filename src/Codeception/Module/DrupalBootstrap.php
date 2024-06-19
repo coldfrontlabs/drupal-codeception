@@ -7,8 +7,9 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\Module\DrupalBootstrap\EventsAssertionsTrait;
 use Codeception\TestDrupalKernel;
-use DrupalFinder\DrupalFinder;
 use Symfony\Component\HttpFoundation\Request;
+use DrupalFinder\DrupalFinder;
+
 
 /**
  * Class DrupalBootstrap.
@@ -87,6 +88,7 @@ class DrupalBootstrap extends Module {
    */
   public function getDrupalRoot(): ?string {
     $drupalFinder = new DrupalFinder();
+    $drupalFinder->locateRoot(getcwd());
     $drupalRoot = $drupalFinder->getDrupalRoot();
     return !is_null($drupalRoot) ? $drupalRoot : FALSE;
   }
