@@ -92,7 +92,7 @@ class DrupalBootstrap extends Module {
     $drupalRoot = $drupalFinder->getDrupalRoot();
     return !is_null($drupalRoot) ? $drupalRoot : FALSE;
   }
-  
+
   /**
    * Enabled dependent modules.
    */
