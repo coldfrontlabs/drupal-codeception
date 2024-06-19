@@ -3,8 +3,8 @@
 namespace Codeception\Module;
 
 use Codeception\Module;
-use Drupal\Component\Utility\Xss;
 use Drupal\Core\Logger\RfcLogLevel;
+use Drupal\Component\Utility\Xss;
 
 /**
  * Class DrupalWatchdog.
@@ -35,7 +35,7 @@ class DrupalWatchdog extends Module {
    *
    * @var array
    */
-  protected $config = [
+  protected array $config = [
     'channels' => [],
     'level' => 'ERROR',
     'enabled' => TRUE,

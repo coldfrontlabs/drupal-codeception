@@ -3,9 +3,10 @@
 namespace Codeception\Module;
 
 use Codeception\Module;
-use Codeception\TestInterface as TestCase;
+use Codeception\TestInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Url;
+use Exception;
 
 /**
  * Class DrupalEntity.
