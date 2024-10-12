@@ -11,9 +11,8 @@ Includes:
 
 ## Differences from guncha25/drupal-codeception
 
-- PHP 8 support
-- No dependency on Faker
-- Various fixes
+- Mostly added support for testing events and event subscribers.
+- Otherwise pretty much exactly the same (major props to guncha25)
 
 ## Installation
 
